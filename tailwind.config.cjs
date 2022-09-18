@@ -5,7 +5,19 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'yellow': '#FFCB47',
+        'placeholder': '#202020'
+      },
+      backgroundImage: {
+        'yellow-shape': "url('./src/assets/bg-yellow-shape.svg')",
+        'image-card': "url(./src/assets/image-card.png)"
+      },
+      backgroundSize: {
+        'yellow-shape-size': '45%' 
+      }
+    },
   },
   plugins: [],
 }
