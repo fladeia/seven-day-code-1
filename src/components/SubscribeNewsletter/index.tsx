@@ -1,7 +1,9 @@
 import { Envelope } from 'phosphor-react'
 import heroImage from '../../assets/imagem-hero.png'
 import { Card } from '../Card'
-import { CardSmall } from '../CardSmall'
+import { CardProduct } from '../CardProduct'
+import plantImage from '../../assets/card-small-image-1.png'
+
 
 export function SubscribeNewsletter() {
   const plants = ['Ajuga reptans', 'Cordyline fruticosa', 'Crassula ovata', 'Cyperus rotundus', 'Delairea odorata', 'Datura metel']
@@ -32,7 +34,7 @@ export function SubscribeNewsletter() {
         <section className='grid grid-cols-3 gap-4 mb-32  '>
           {
             plants.map((item, index) => {
-              return <CardSmall key={index} title={item} id={index + 1} />
+              return <CardProduct key={index} plantImage={plantImage} title={item} price='20,00' />
             })
           }
         </section>
