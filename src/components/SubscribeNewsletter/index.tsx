@@ -1,29 +1,37 @@
-import { useState } from 'react'
-import { Formik, useFormik } from 'formik'
+import { useFormik, FormikErrors } from 'formik'
 import { Envelope } from 'phosphor-react'
 import heroImage from '../../assets/imagem-hero.png'
 import { Card } from '../Card'
 import { CardProduct } from '../CardProduct'
 import plantImage from '../../assets/card-small-image-1.png'
 
+interface Values {
+  email: string
+}
 
 export function SubscribeNewsletter() {
+  const validate = (values: Values) => {
+    const errors: FormikErrors<Values> = {}
+    if (!values.email) {
+      errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Insira um e-mail válido'
+    }
+
+    return errors
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
     },
+    validate,
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2))
     }
   })
 
   const plants = ['Ajuga reptans', 'Cordyline fruticosa', 'Crassula ovata', 'Cyperus rotundus', 'Delairea odorata', 'Datura metel']
-  // const [email, setEmail] = useState('')
-
-  // function handleClick(e: React.SyntheticEvent) {
-  //   console.log(email)
-  //   setEmail('')
-  // }
 
   return (
     <>
@@ -36,7 +44,7 @@ export function SubscribeNewsletter() {
           </p>
           <form
             onSubmit={formik.handleSubmit}
-            className="subscribe w-full h-[75px] mt-9 flex  items-center shadow-lg shadow-gray-400 "
+            className="subscribe w-full h-[75px] mt-9 flex items-center shadow-lg shadow-gray-400 "
           >
             <label htmlFor="email">
               <Envelope size={24} className='w-16 text-placeholder text-gray opacity-50' />
@@ -50,13 +58,18 @@ export function SubscribeNewsletter() {
               placeholder='Insira seu e-mail'
               className='flex-1 outline-none text-gray opacity-50'
             />
-            <button
-              type='submit'
-              className='h-full px-10 bg-yellow text-white'
-            // onClick={handleClick}
-            >
-              Assinar Newsletter
-            </button>
+            {
+              formik.errors.email
+                ?
+                <div className='text-xs px-1 text-center text-red-600'>{formik.errors.email}</div>
+                :
+                <button
+                  type='submit'
+                  className='h-full px-10 bg-yellow text-white'
+                >
+                  Assinar Newsletter
+                </button>}
+
           </form>
         </section>
         <section className="right w-[618px]">
