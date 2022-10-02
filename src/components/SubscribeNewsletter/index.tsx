@@ -1,14 +1,16 @@
+import { useState } from 'react'
 import { useFormik, FormikErrors } from 'formik'
-import { Envelope } from 'phosphor-react'
-import heroImage from '../../assets/imagem-hero.png'
 import { Card } from '../Card'
 import { CardProduct } from '../CardProduct'
+import { Envelope } from 'phosphor-react'
+import heroImage from '../../assets/imagem-hero.png'
 import plantImage from '../../assets/card-small-image-1.png'
-import { useState } from 'react'
 
 interface Values {
   email: string
 }
+
+const urlBackend = 'https://portfolio-backend-q2v9.vercel.app/api'
 
 export function SubscribeNewsletter() {
   const [email, setEmail] = useState('')
@@ -31,44 +33,18 @@ export function SubscribeNewsletter() {
     validate,
     onSubmit: values => {
       setEmail(values.email)
-      // console.log(email)
       // alert(JSON.stringify(values, null, 2))
 
-
-      // client.setApiKey(import.meta.env.VITE_SENDGRID_API_KEY)
-
-      // const request = {
-      //   method: 'GET',
-      //   url: 'https://api.sendgrid.com/v3/api_keys'
-      // };
-
-      // client.request(request)
-      //   .then(([response, body]) => {
-      //     console.log(response.statusCode);
-      //     console.log(body);
-      //   })
-
-      // const msg = {
-      //   to: { email },
-      //   from: 'flavio@ladeia.dev.br',
-      //   subject: 'Newsletter Casa Verde',
-      //   text: 'Cadastro da newsletter Casa Verde',
-      //   html: '<div><strong>Olá, Nome.</strong><p>Boas-vindas à Casa Verde! Você se cadastrou em nossa newsletter e vai começar a receber e-mails com as novidades de nossa loja e dicas de como cuidar de suas plantas.</p><span>Até logo!</span></div>'
-      // }
-
-      // sgMail
-      //   .send(msg)
-      //   .then(() => {
-      //     console.log('Email send')
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
-
-
+      fetch(urlBackend, {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
     }
   })
-
 
   const plants = ['Ajuga reptans', 'Cordyline fruticosa', 'Crassula ovata', 'Cyperus rotundus', 'Delairea odorata', 'Datura metel']
 
