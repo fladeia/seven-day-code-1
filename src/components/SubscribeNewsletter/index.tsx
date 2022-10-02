@@ -46,6 +46,8 @@ export function SubscribeNewsletter() {
     }
   })
 
+  // TODO: confirm email received
+
   const plants = ['Ajuga reptans', 'Cordyline fruticosa', 'Crassula ovata', 'Cyperus rotundus', 'Delairea odorata', 'Datura metel']
 
   return (
